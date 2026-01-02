@@ -1,0 +1,24 @@
+thread
+#include <pthread.h>  // Header for pthreads library
+#include <stdio.h>    // Header for standard I/O functions
+#include <unistd.h>   // Header for sleep function
+
+// Function to be executed by the thread
+void* print_message(void* message) {
+    printf("Thread says: %s\n", (char*)message);  // Print the message passed to the thread
+    return NULL;
+}
+
+int main() {
+    pthread_t thread_id;                         // Declare a thread variable
+    const char* msg = "Hello from the thread!";  // Message for the thread
+
+    // Create a new thread and pass the message to it
+    pthread_create(&thread_id, NULL, print_message, (void*)msg);
+
+    // Wait for the thread to complete its task (join it with the main thread)
+    pthread_join(thread_id, NULL);
+
+    printf("Main thread says: Thread has finished execution.\n");
+    return 0;
+}
